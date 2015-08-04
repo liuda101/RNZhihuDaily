@@ -65,6 +65,8 @@ var NewsList = React.createClass({
     return (
       <ListView
         automaticallyAdjustContentInsets={false}
+        style={{flex: 1}}
+        contentInset={{bottom: 64}}
         dataSource={this.state.dataSource}
         renderRow={this._renderRow} />
     );

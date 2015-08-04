@@ -11,7 +11,12 @@ var {
   WebView
 } = React;
 
+var Dimensions = require('Dimensions');
+var DEVICE_WIDTH = Dimensions.get('window').width;
 var API = require('../api');
+
+var HTMLWebView = require('react-native-html-webview');
+
 
 var NewsDetail = React.createClass({
 
@@ -38,10 +43,31 @@ var NewsDetail = React.createClass({
 
   render: function() {
     return (
-      <WebView html={this.state.html}/>
+      <ScrollView
+        style={styles.container}
+        contentInset={{top: 0, bottom: 64}}
+        automaticallyAdjustContentInsets={false}>
+        
+        
+        <HTMLWebView html={this.state.html} style={{width: DEVICE_WIDTH}} autoHeight={true} makeSafe={false}/>
+
+      </ScrollView>
     );
   }
 
 });
+
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  img: {
+    height: 120,
+    width: DEVICE_WIDTH,
+    backgroundColor: '#ccc'
+  }
+});
+
 
 module.exports = NewsDetail;

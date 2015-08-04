@@ -1,6 +1,13 @@
 # RNZhihuDaily
 Zhihu Daily used React Native
 
+### How to run
+1. `git clone https://github.com/liuda101/RNZhihuDaily`
+2. Under the `RNZhihuDaily` dir, run `npm install`
+3. Open `RNZhihuDaily.xcodeproj` in Xcode
+4. Run it!
+
+
 
 -------
 

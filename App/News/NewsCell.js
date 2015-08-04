@@ -49,14 +49,13 @@ var styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     color: '#333'
   },
   img: {
     width: 75,
     height: 50,
-    marginLeft: 10,
-    backgroundColor: '#ddd'
+    marginLeft: 10
   }
 });
 
