@@ -18,6 +18,9 @@ var API = require('../api');
 var IMAGE_WIDTH = 380;
 var IMAGE_HEIGHT = 592;
 
+
+var easingFunction = function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 };
+
 var DailyApp = React.createClass({
 
   _loadImageInfo: function() {
@@ -38,20 +41,20 @@ var DailyApp = React.createClass({
     var self = this;
 
     Animated.parallel([
-      Animated.spring(this.state.imageScale, {
+      Animated.timing(this.state.imageScale, {
         toValue: 1.1,
-        friction: 8,
-        tension: 6,
+        duration: 3000,
+        easing: easingFunction
       }),
-      Animated.spring(this.state.infoOpacity, {
+      Animated.timing(this.state.infoOpacity, {
         toValue: 1.0,
-        friction: 8,
-        tension: 6,
+        duration: 3000,
+        easing: easingFunction
       }),
-      Animated.spring(this.state.infoPositionY, {
+      Animated.timing(this.state.infoPositionY, {
         toValue: 0,
-        friction: 8,
-        tension: 6,
+        duration: 3000,
+        easing: easingFunction
       })
     ]).start(function() {
       if (self.props.onAnimationEnd) {
