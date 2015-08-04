@@ -12,7 +12,7 @@ Zhihu Daily used React Native
 -------
 
 #### Thanks to
-1. (JavaScript easing functions)[https://gist.github.com/gre/1650294]
+1. [JavaScript easing functions](https://gist.github.com/gre/1650294)
 
 -------
 
