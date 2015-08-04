@@ -3,38 +3,73 @@
 var React = require('react-native');
 var {
   StyleSheet,
+  ListView,
+  TouchableHighlight,
   View,
-  Text
+  Text,
+  Image
 } = React;
 
-var DailyApp = React.createClass({
+var API = require('../api');
 
-  _onLaunchAnimationEnd: function() {
+var NewsCell = require('./NewsCell');
+var NewsDetail = require('./NewsDetail');
 
+var NewsList = React.createClass({
+
+  _onRowPress: function(data) {
+    this.props.navigator.push({
+      title: '详情',
+      component: NewsDetail,
+      passProps: {data: data}
+    });
+  },
+
+  _loadNews: function() {
+    fetch(API.LATEST_NEWS)
+      .then((response) => response.json())
+      .then((result) => {
+        this._fillRows(result);
+      })
+      .done();
+  },
+
+  _fillRows: function(newsList) {
+    Array.prototype.push.apply(this.allNews, newsList.stories);
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this.allNews)
+    });
+  },
+
+  _renderRow: function(rowData, section, row) {
+    return (
+      <NewsCell data={rowData} onPress={this._onRowPress}/>
+    );
+  },
+
+  componentDidMount: function() {
+    this.allNews = [];
+
+    this._loadNews();
+  },
+
+  getInitialState: function() {
+    return {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      })
+    };
   },
 
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text>{'i'}</Text>
-      </View>
+      <ListView
+        automaticallyAdjustContentInsets={false}
+        dataSource={this.state.dataSource}
+        renderRow={this._renderRow} />
     );
   }
 
 });
 
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  launchView: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
-  }
-});
-
-module.exports = DailyApp;
+module.exports = NewsList;

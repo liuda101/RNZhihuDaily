@@ -1,4 +1,4 @@
-var base = 'https://news-at.zhihu.com/api/4/';
+var base = 'http://news-at.zhihu.com/api/4/';
 
 module.exports = {
   START_IMAGE: base + 'start-image/1080*1776',

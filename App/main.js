@@ -8,7 +8,7 @@ var {
 } = React;
 
 var LaunchView = require('./LaunchView/Launch');
-var NewsList = require('./News/NewsList');
+var NewsApp = require('./News/NewsApp');
 
 var DailyApp = React.createClass({
 
@@ -40,14 +40,10 @@ var DailyApp = React.createClass({
 
   render: function() {
     var mainView = this.state.launchViewEnded ? 
-      <Animated.View style={{opacity: this.state.mainViewOpacity}}><NewsList /></Animated.View>
+      <Animated.View style={[styles.container, {opacity: this.state.mainViewOpacity}]}><NewsApp /></Animated.View>
       :
       <Animated.View style={[styles.container, {opacity: this.state.launchViewOpacity}]}><LaunchView onAnimationEnd={this._onLaunchAnimationEnd} style={styles.mainView}/></Animated.View>;
-    return (
-      <View style={styles.container}>
-        {mainView}
-      </View>
-    );
+    return mainView;
   }
 
 });
