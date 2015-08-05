@@ -32,7 +32,7 @@ var DailyApp = React.createClass({
 
   getInitialState: function() {
     return {
-      launchViewEnded: true,
+      launchViewEnded: false,
       launchViewOpacity: new Animated.Value(1.0),
       mainViewOpacity: new Animated.Value(1)
     };
