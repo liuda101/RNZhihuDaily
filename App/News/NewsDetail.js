@@ -4,11 +4,9 @@ var React = require('react-native');
 var {
   StyleSheet,
   ScrollView,
-  TouchableHighlight,
   View,
-  Text,
-  Image,
-  WebView
+  ActivityIndicatorIOS,
+  Animated
 } = React;
 
 var Dimensions = require('Dimensions');
@@ -25,10 +23,34 @@ var NewsDetail = React.createClass({
       .then((response) => response.json())
       .then((result) => {
         this.setState({
+          isLoading: false,
           html: result.body + '<link type="text/css" rel="stylesheet" href="' + result.css[0] + '" />'
         });
       })
       .done();
+  },
+
+  _renderLoading: function() {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicatorIOS />
+      </View>
+    );
+  },
+
+  _renderContent: function() {
+    return (
+      <ScrollView
+        style={styles.container}
+        contentInset={{top: 0, bottom: 64}}
+        automaticallyAdjustContentInsets={false}>
+
+        <View>
+          <HTMLWebView html={this.state.html} style={{width: DEVICE_WIDTH, marginTop: -200}} autoHeight={true} makeSafe={false}/>
+        </View>
+
+      </ScrollView>
+    );
   },
 
   componentDidMount: function() {
@@ -37,22 +59,14 @@ var NewsDetail = React.createClass({
 
   getInitialState: function() {
     return {
-      html: 'loading...'
+      isLoading: true,
+      html: ''
     };
   },
 
   render: function() {
-    return (
-      <ScrollView
-        style={styles.container}
-        contentInset={{top: 0, bottom: 64}}
-        automaticallyAdjustContentInsets={false}>
-        
-        
-        <HTMLWebView html={this.state.html} style={{width: DEVICE_WIDTH}} autoHeight={true} makeSafe={false}/>
-
-      </ScrollView>
-    );
+    var toRender = this.state.isLoading ? this._renderLoading() : this._renderContent();
+    return toRender;
   }
 
 });
@@ -63,7 +77,8 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   img: {
-    height: 120,
+    position: 'absolute',
+    height: 200,
     width: DEVICE_WIDTH,
     backgroundColor: '#ccc'
   }
