@@ -15,10 +15,13 @@ var API = require('../api');
 
 var NewsCell = require('./NewsCell');
 var NewsDetail = require('./NewsDetail');
+var ScrollCard = require('../ScrollCard/ScrollCard');
 
 var util = require('../util/util');
 
 var CONSTANT = require('./CONSTANT');
+
+var SCROLL_CARD_KEY = 'scrollCard';
 
 var NewsList = React.createClass({
 
@@ -57,6 +60,13 @@ var NewsList = React.createClass({
   },
 
   _fillRows: function(newsList) {
+
+    if (this.firstSectionId === null) {
+      this.firstSectionId = 's' + newsList.date;
+
+      this.allNews[SCROLL_CARD_KEY] = {data: newsList.top_stories};
+    }
+
     // Object.keys 顺序说明: http://w3help.org/zh-cn/causes/SJ9011
     this.allNews['s' + newsList.date] = newsList.stories;
     
@@ -73,12 +83,20 @@ var NewsList = React.createClass({
   },
 
   _renderRow: function(rowData, section, row) {
+    if (section === SCROLL_CARD_KEY) {
+      return (
+        <ScrollCard scrollDatas={rowData}/>
+      );
+    }
     return (
       <NewsCell data={rowData} onPress={this._onRowPress}/>
     );
   },
 
   _renderSectionHeader: function(sectionData, secitonId) {
+    if (secitonId === this.firstSectionId || secitonId === SCROLL_CARD_KEY) {
+      return null;
+    }
     return (
       <View style={styles.sectionHeader}><Text style={styles.sectionHeaderText}>{util.readableDate(secitonId.substring(1))}</Text></View>
     );
@@ -95,6 +113,8 @@ var NewsList = React.createClass({
   componentDidMount: function() {
     this.allNews = {};
     this.allSections = [];
+
+    this.firstSectionId = null;
 
     this.isLoadingMoreNews = false;
 
