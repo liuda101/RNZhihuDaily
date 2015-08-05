@@ -30,7 +30,7 @@ var NewsCell = React.createClass({
       <TouchableHighlight underlayColor={CONSTANT.TAP_COLOR} onPress={this._onPress}>
         <View style={styles.cellContainer}>
           <Text style={styles.title}>{this.props.data.title}</Text>
-          <Image style={styles.img} source={{uri: this.props.data.images[0]}}/>
+          <Image style={styles.img}/>
         </View>
       </TouchableHighlight>
     );
