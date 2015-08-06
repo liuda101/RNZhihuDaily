@@ -8,10 +8,11 @@ var {
   Image,
   Text,
   ScrollView,
-  WebView
+  TouchableHighlight
 } = React;
 
 var Dimensions = require('Dimensions');
+var CONSTANT = require('../News/CONSTANT');
 
 var ScrollCard = React.createClass({
 
@@ -82,7 +83,14 @@ var ScrollCard = React.createClass({
     );
   },
 
+  _onPress: function(card) {
+    if (this.props.onPress) {
+      this.props.onPress(card);
+    }
+  },
+
   _renderCards: function() {
+    var self = this;
     var cardData = [];
     var cards = this.state.scrollDatas;
 
@@ -106,19 +114,19 @@ var ScrollCard = React.createClass({
 
     return cardData.map(function(card) {
       // Image don't load image... fuck it!
-      return (
-        <WebView style={styles.card} scrollEnabled={false} html={'<body style="padding:0; margin:0;"><img src="' + card.image + '" / style="margin:0; width:100%;"></body>'} />
-      );
       // return (
-      //   <View style={styles.card}>
-      //     <Image style={styles.image} source={{uri: 'http://loremflickr.com/640/480/dog'}} onLoadStart={() => console.log('onLoadStart')}
-      //       onLoadError={() => console.log('error')} onLoadProgress={() => console.log('onLoadProgress')}>
-      //       <View style={styles.titleBg}>
-      //         <Text style={styles.title}>{card.title}</Text>
-      //       </View>
-      //     </Image>
-      //   </View>
+      //   <WebView style={styles.card} scrollEnabled={false} html={'<body style="padding:0; margin:0;"><img src="' + card.image + '" / style="margin:0; width:100%;"></body>'} />
       // );
+      return (
+        <TouchableHighlight style={styles.card} onPress={self._onPress.bind(self, card)} underlayColor={CONSTANT.TAP_COLOR}>
+          <Image style={styles.image} source={{uri: 'http://loremflickr.com/640/480/dog'}} onLoadStart={() => console.log('onLoadStart')}
+            onLoadError={() => console.log('error')} onLoadProgress={() => console.log('onLoadProgress')}>
+            <View style={styles.titleBg}>
+              <Text style={styles.title}>{card.title}</Text>
+            </View>
+          </Image>
+        </TouchableHighlight>
+      );
     });
   }
 

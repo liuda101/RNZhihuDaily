@@ -17,6 +17,7 @@ var NewsCell = require('./NewsCell');
 var NewsDetail = require('./NewsDetail');
 var ScrollCard = require('../ScrollCard/ScrollCard');
 
+
 var util = require('../util/util');
 
 var CONSTANT = require('./CONSTANT');
@@ -85,7 +86,7 @@ var NewsList = React.createClass({
   _renderRow: function(rowData, section, row) {
     if (section === SCROLL_CARD_KEY) {
       return (
-        <ScrollCard scrollDatas={rowData}/>
+        <ScrollCard scrollDatas={rowData} onPress={this._onRowPress}/>
       );
     }
     return (

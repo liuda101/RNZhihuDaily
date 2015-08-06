@@ -26,11 +26,13 @@ var NewsCell = React.createClass({
   },
 
   render: function() {
+    var theImage = (<Image style={styles.img}><Text style={styles.loadingText}>{'Loading'}</Text></Image>);
+
     return (
       <TouchableHighlight underlayColor={CONSTANT.TAP_COLOR} onPress={this._onPress}>
         <View style={styles.cellContainer}>
           <Text style={styles.title}>{this.props.data.title}</Text>
-          <Image style={styles.img}/>
+          {theImage}
         </View>
       </TouchableHighlight>
     );
@@ -55,7 +57,14 @@ var styles = StyleSheet.create({
   img: {
     width: 75,
     height: 50,
-    marginLeft: 10
+    marginLeft: 10,
+    backgroundColor: '#eee',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  loadingText: {
+    fontSize: 10,
+    color: '#ddd'
   }
 });
 
