@@ -31,8 +31,8 @@
    * on the same Wi-Fi network.
    */
 
-//  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.10.138:8081/index.ios.bundle"];
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+//  jsCodeLocation = [NSURL URLWithString:@"http://192.168.10.138:8081/index.ios.bundle"];
   
 
   /**
@@ -50,6 +50,17 @@
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"RNZhihuDaily"
                                                    launchOptions:launchOptions];
+  
+  CGFloat width = [UIScreen mainScreen].bounds.size.width;
+  CGFloat height = [UIScreen mainScreen].bounds.size.height;
+  
+  UIImage *loadingImage = [UIImage imageNamed:@"LaunchImage"];
+  UIImageView *loadingImageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, width, height)];
+  loadingImageView.image = loadingImage;
+  loadingImageView.contentMode = UIViewContentModeScaleAspectFill;
+  
+  rootView.loadingView = loadingImageView;
+  
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
